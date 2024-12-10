@@ -1,0 +1,69 @@
+vversion: '3.8'
+
+networks:
+  sae502:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 192.168.119.0/24
+
+services:
+  securityonion:
+    build: .
+    container_name: securityonion
+    networks:
+      sae502:
+        ipv4_address: 192.168.119.2
+    extra_hosts:
+      - "ftp:192.168.119.3"
+      - "mailu:192.168.119.4"
+      - "nodemanager:192.168.119.5"
+      - "test:192.168.119.6"
+
+  ftp:
+    build: .
+    container_name: ftp
+    networks:
+      sae502:
+        ipv4_address: 192.168.119.3
+    extra_hosts:
+      - "securityonion:192.168.119.2"
+      - "mailu:192.168.119.4"
+      - "nodemanager:192.168.119.5"
+      - "test:192.168.119.6"
+
+  mailu:
+    build: .
+    container_name: mailu
+    networks:
+      sae502:
+        ipv4_address: 192.168.119.4
+    extra_hosts:
+      - "securityonion:192.168.119.2"
+      - "ftp:192.168.119.3"
+      - "nodemanager:192.168.119.5"
+      - "test:192.168.119.6"
+
+  nodemanager:
+    build: .
+    container_name: nodemanager
+    networks:
+      sae502:
+        ipv4_address: 192.168.119.5
+    extra_hosts:
+      - "securityonion:192.168.119.2"
+      - "ftp:192.168.119.3"
+      - "mailu:192.168.119.4"
+      - "test:192.168.119.6"
+
+  test:
+    build: .
+    container_name: test
+    networks:
+      sae502:
+        ipv4_address: 192.168.119.6
+    extra_hosts:
+      - "securityonion:192.168.119.2"
+      - "ftp:192.168.119.3"
+      - "mailu:192.168.119.4"
+      - "nodemanager:192.168.119.5"
