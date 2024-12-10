@@ -1,0 +1,86 @@
+version: '3.8'
+
+services:
+  security_onion:
+    image: ubuntu:latest
+    container_name: security_onion_${INCREMENT}
+    hostname: security_onion_${INCREMENT}
+    networks:
+      sae502:
+        ipv4_address: 192.168.119.$((2 + INCREMENT))
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      - CONTAINER_NAME=security_onion_${INCREMENT}
+      - CONTAINER_IP=192.168.119.$((2 + INCREMENT))
+
+  ftp_secure:
+    image: ubuntu:latest
+    container_name: ftp_secure_${INCREMENT}
+    hostname: ftp_secure_${INCREMENT}
+    networks:
+      sae502:
+        ipv4_address: 192.168.119.$((3 + INCREMENT))
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      - CONTAINER_NAME=ftp_secure_${INCREMENT}
+      - CONTAINER_IP=192.168.119.$((3 + INCREMENT))
+
+  mailu:
+    image: ubuntu:latest
+    container_name: mailu_${INCREMENT}
+    hostname: mailu_${INCREMENT}
+    networks:
+      sae502:
+        ipv4_address: 192.168.119.$((4 + INCREMENT))
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      - CONTAINER_NAME=mailu_${INCREMENT}
+      - CONTAINER_IP=192.168.119.$((4 + INCREMENT))
+
+  test_container:
+    image: ubuntu:latest
+    container_name: test_container_${INCREMENT}
+    hostname: test_container_${INCREMENT}
+    networks:
+      sae502:
+        ipv4_address: 192.168.119.$((5 + INCREMENT))
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      - CONTAINER_NAME=test_container_${INCREMENT}
+      - CONTAINER_IP=192.168.119.$((5 + INCREMENT))
+
+  node_manager:
+    image: ubuntu:latest
+    container_name: node_manager_${INCREMENT}
+    hostname: node_manager_${INCREMENT}
+    networks:
+      sae502:
+        ipv4_address: 192.168.119.$((6 + INCREMENT))
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      - CONTAINER_NAME=node_manager_${INCREMENT}
+      - CONTAINER_IP=192.168.119.$((6 + INCREMENT))
+
+networks:
+  sae502:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 192.168.119.0/24
+
+configs:
+  init-ssh:
+    file: ./init-ssh.sh
+
+  config:
+    file: ./config.txt
