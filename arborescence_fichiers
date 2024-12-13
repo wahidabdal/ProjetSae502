@@ -1,0 +1,18 @@
+ProjetSae502/
+├── playbooks/
+│   ├── execplaybooks.yml
+│   ├── deploy_security_onion.yml
+│   ├── deploy_ftp.yml
+│   ├── deploy_mailu.yml
+│   ├── configure_ssl_ftp.yml
+│   └── configure_alerting.yml
+└── inventaire/
+    └── hosts.ini
+
+
+
+cette commande permet de créer l'arborescence: 
+
+mkdir -p ProjetSae502/{playbooks,inventaire} && \
+touch ProjetSae502/playbooks/{execplaybooks.yml,deploy_security_onion.yml,deploy_ftp.yml,deploy_mailu.yml,configure_ssl_ftp.yml,configure_alerting.yml} && \
+touch ProjetSae502/inventaire/hosts.ini
