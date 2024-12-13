@@ -11,6 +11,7 @@ services:
   securityonion:
     build: .
     container_name: securityonion
+    hostname: securityonion
     networks:
       sae502:
         ipv4_address: 192.168.119.2
@@ -22,7 +23,8 @@ services:
 
   ftp:
     build: .
-    container_name: ftp
+    container_name: secure_ftp
+    hostname: secure_ftp
     networks:
       sae502:
         ipv4_address: 192.168.119.3
@@ -35,6 +37,7 @@ services:
   mailu:
     build: .
     container_name: mailu
+    hostname: mailu
     networks:
       sae502:
         ipv4_address: 192.168.119.4
@@ -47,6 +50,7 @@ services:
   nodemanager:
     build: .
     container_name: nodemanager
+    hostname: nodemanager
     networks:
       sae502:
         ipv4_address: 192.168.119.5
@@ -58,7 +62,8 @@ services:
 
   test:
     build: .
-    container_name: test
+    container_name: machine_test
+    hostname: machine_test
     networks:
       sae502:
         ipv4_address: 192.168.119.6
