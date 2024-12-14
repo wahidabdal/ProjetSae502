@@ -1,18 +1,27 @@
 ProjetSae502/
 ├── playbooks/
 │   ├── execplaybooks.yml
-│   ├── deploy_security_onion.yml
-│   ├── deploy_ftp.yml
-│   ├── deploy_mailu.yml
-│   ├── configure_ssl_ftp.yml
-│   └── configure_alerting.yml
+│   ├── deploy_security_onion/
+│   │   └── tasks/
+│   │       └── main.yml
+│   ├── deploy_ftp/
+│   │   └── tasks/
+│   │       └── main.yml
+│   ├── deploy_mailu/
+│   │   └── tasks/
+│   │       └── main.yml
+│   ├── configure_ssl_ftp/
+│   │   └── tasks/
+│   │       └── main.yml
+│   └── configure_alerting/
+│       └── tasks/
+│           └── main.yml
 └── inventaire/
     └── hosts.ini
 
 
-
 cette commande permet de créer l'arborescence: 
 
-mkdir -p ProjetSae502/{playbooks,inventaire} && \
-touch ProjetSae502/playbooks/{execplaybooks.yml,deploy_security_onion.yml,deploy_ftp.yml,deploy_mailu.yml,configure_ssl_ftp.yml,configure_alerting.yml} && \
+mkdir -p ProjetSae502/{playbooks/{deploy_security_onion/tasks,deploy_ftp/tasks,deploy_mailu/tasks,configure_ssl_ftp/tasks,configure_alerting/tasks},inventaire} && \
+touch ProjetSae502/playbooks/{execplaybooks.yml,deploy_security_onion/tasks/main.yml,deploy_ftp/tasks/main.yml,deploy_mailu/tasks/main.yml,configure_ssl_ftp/tasks/main.yml,configure_alerting/tasks/main.yml} && \
 touch ProjetSae502/inventaire/hosts.ini
