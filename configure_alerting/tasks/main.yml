@@ -1,0 +1,24 @@
+---
+# Playbook pour la configuration du système d’alerting pour Security Onion
+- name: Configurer le système d’alerting
+  hosts: security_onion
+  become: yes
+  tasks:
+    - name: Installer les dépendances nécessaires
+      apt:
+        name: "{{ item }}"
+        state: present
+      loop:
+        - mailutils
+        - postfix
+
+    - name: Configurer Postfix pour envoyer des alertes par email
+      lineinfile:
+        path: /etc/postfix/main.cf
+        line: "relayhost = [smtp.example.com]:587"
+        create: yes
+
+    - name: Redémarrer Postfix
+      service:
+        name: postfix
+        state: restarted
