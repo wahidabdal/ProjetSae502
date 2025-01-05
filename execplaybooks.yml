@@ -1,0 +1,20 @@
+---
+# Playbook pour le lancement des autres playbooks codés
+- name: Lancer tous les playbooks
+  hosts: all
+  become: yes
+  tasks:
+    - name: Déployer Security Onion
+      include: deploy_security_onion/tasks/main.yml
+
+    - name: Déployer le serveur FTP sécurisé
+      include: deploy_ftp/tasks/main.yml
+
+    - name: Déployer Mailu
+      include: deploy_mailu/tasks/main.yml
+
+    - name: Configurer SSL pour le serveur FTP
+      include: configure_ssl_ftp/tasks/main.yml
+
+    - name: Configurer le système d’alerting
+      include: configure_alerting/tasks/main.yml
