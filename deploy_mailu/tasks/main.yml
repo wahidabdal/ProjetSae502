@@ -1,0 +1,34 @@
+---
+# Playbook pour le déploiement et la configuration du serveur mail Mailu
+- name: Déploiement de Mailu
+  hosts: mailu_server
+  become: yes
+  tasks:
+    - name: Installer Docker
+      apt:
+        name: docker.io
+        state: present
+
+    - name: Installer Docker Compose
+      apt:
+        name: docker-compose
+        state: present
+
+    - name: Télécharger l'image Docker de Mailu
+      docker_image:
+        name: mailu/mailu
+        source: pull
+
+    - name: Lancer le conteneur Mailu
+      docker_container:
+        name: mailu
+        image: mailu/mailu
+        state: started
+        ports:
+          - "25:25"
+          - "110:110"
+          - "143:143"
+          - "465:465"
+          - "587:587"
+          - "993:993"
+          - "995:995"
