@@ -1,0 +1,32 @@
+---
+# Playbook pour le déploiement et la configuration du serveur FTP sécurisé avec SSL
+- name: Déploiement du serveur FTP sécurisé
+  hosts: ftp_server
+  become: yes
+  tasks:
+    - name: Installer Docker
+      apt:
+        name: docker.io
+        state: present
+
+    - name: Installer Docker Compose
+      apt:
+        name: docker-compose
+        state: present
+
+    - name: Télécharger l'image Docker du serveur FTP
+      docker_image:
+        name: ftp_server_image
+        source: pull
+
+    - name: Lancer le conteneur FTP
+      docker_container:
+        name: ftp_server
+        image: ftp_server_image
+        state: started
+        ports:
+          - "21:21"
+          - "21000-21010:21000-21010"
+
+    - name: Configurer SSL pour le serveur FTP
+      include_tasks: configure_ssl_ftp/tasks/main.yml
