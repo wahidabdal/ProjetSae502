@@ -1,0 +1,29 @@
+---
+# Playbook pour le déploiement et la configuration de Security Onion
+- name: Déploiement de Security Onion
+  hosts: security_onion
+  become: yes
+  tasks:
+    - name: Installer Docker
+      apt:
+        name: docker.io
+        state: present
+
+    - name: Installer Docker Compose
+      apt:
+        name: docker-compose
+        state: present
+
+    - name: Télécharger l'image Docker de Security Onion
+      docker_image:
+        name: securityonion/securityonion
+        source: pull
+
+    - name: Lancer le conteneur Security Onion
+      docker_container:
+        name: security_onion
+        image: securityonion/securityonion
+        state: started
+        ports:
+          - "80:80"
+          - "443:443"
