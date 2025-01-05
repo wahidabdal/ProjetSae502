@@ -1,0 +1,24 @@
+---
+# Playbook pour la configuration des certificats SSL/TLS pour le serveur FTP
+- name: Configurer SSL pour le serveur FTP
+  hosts: ftp_server
+  become: yes
+  tasks:
+    - name: Installer OpenSSL
+      apt:
+        name: openssl
+        state: present
+
+    - name: Générer un certificat SSL auto-signé
+      command: openssl req -new -x509 -days 365 -nodes -out /etc/ssl/certs/ftp_server.crt -keyout /etc/ssl/private/ftp_server.key -subj "/C=FR/ST=Paris/L=Paris/O=Org/OU=IT/CN=ftp_server"
+
+    - name: Configurer le serveur FTP pour utiliser SSL
+      lineinfile:
+        path: /etc/vsftpd.conf
+        line: "ssl_enable=YES"
+        create: yes
+
+    - name: Redémarrer le serveur FTP
+      service:
+        name: vsftpd
+        state: restarted
